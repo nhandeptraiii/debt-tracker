@@ -8,7 +8,7 @@ echo "Starting Deployment for Debt Tracker..."
 # git pull origin main
 
 # Build và khởi chạy các container
-docker-compose up --build -d
+docker compose up --build -d
 
 echo "Deployment completed!"
 echo "Các container đang chạy:"
@@ -18,4 +18,4 @@ echo "Lưu ý:"
 echo "- Frontend: port 8004"
 echo "- Backend: port 8082"
 echo "- Database: port 3309"
-echo "Kiểm tra logs nếu có lỗi: docker-compose logs -f"
+echo "Kiểm tra logs nếu có lỗi: docker compose logs -f"
