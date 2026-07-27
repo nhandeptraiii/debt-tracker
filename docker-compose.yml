@@ -1,29 +1,6 @@
 version: '3.8'
 
 services:
-  debttracker_db:
-    image: mysql:8.0
-    container_name: debttracker_db
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD:-123456}"
-      MYSQL_DATABASE: "${DB_NAME:-debt_tracker}"
-      MYSQL_CHARACTER_SET_SERVER: utf8mb4
-      MYSQL_COLLATION_SERVER: utf8mb4_unicode_ci
-    ports:
-      - "3309:3306"
-    volumes:
-      - debttracker_mysql_data:/var/lib/mysql
-    command: --default-authentication-plugin=mysql_native_password
-    networks:
-      - debttracker_net
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${DB_PASSWORD:-123456}"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 30s
-
   debttracker_backend:
     build:
       context: ./backend
@@ -32,15 +9,12 @@ services:
     restart: always
     environment:
       PORT: 8080
-      DB_HOST: debttracker_db
+      DB_HOST: 171.254.92.12
       DB_USER: root
       DB_PASSWORD: "${DB_PASSWORD:-123456}"
       DB_NAME: "${DB_NAME:-debt_tracker}"
     ports:
       - "8082:8080"
-    depends_on:
-      debttracker_db:
-        condition: service_healthy
     networks:
       - debttracker_net
 
@@ -60,7 +34,3 @@ services:
 networks:
   debttracker_net:
     driver: bridge
-
-volumes:
-  debttracker_mysql_data:
-    driver: local
