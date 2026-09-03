@@ -20,7 +20,7 @@ export default function FundManager({ type }) {
   const fetchFunds = async () => {
     try {
       const res = await axios.get(`${API_URL}/funds?type=${type}`);
-      setTransactions(res.data);
+      setTransactions(Array.isArray(res.data) ? res.data : []);
     } catch (error) {
       console.error("Error fetching funds:", error);
     }

@@ -27,14 +27,13 @@ body {
     radial-gradient(at 0% 0%, hsla(210, 100%, 90%, 1) 0, transparent 50%), 
     radial-gradient(at 50% 0%, hsla(140, 100%, 85%, 0.8) 0, transparent 50%), 
     radial-gradient(at 100% 0%, hsla(190, 100%, 85%, 0.8) 0, transparent 50%);
-  display: flex;
-  justify-content: center;
   padding: 2rem;
 }
 
 .app-container {
   max-width: 1200px;
   width: 100%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -305,4 +304,19 @@ button:active {
   .tabs {
     flex-direction: column;
   }
+}
+
+/* Debt Manager sections */
+.debt-section-box {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.debt-inner-card {
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem;
 }
