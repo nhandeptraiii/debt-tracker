@@ -211,43 +211,7 @@ button:active {
   gap: 1.5rem;
 }
 
-/* Tabs */
-.tabs {
-  display: flex;
-  gap: 0.5rem;
-  background: var(--card-bg);
-  padding: 0.5rem;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  margin-bottom: 1rem;
-}
-
-.tab-btn {
-  flex: 1;
-  background: transparent;
-  color: var(--text-secondary);
-  border: none;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.tab-btn:hover {
-  background: rgba(37, 99, 235, 0.05);
-  color: var(--accent);
-}
-
-.tab-btn.active {
-  background: var(--accent);
-  color: white;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
-}
-
-/* Fund Table */
+/* Table */
 .fund-table-container {
   overflow-x: auto;
   margin-top: 1rem;
@@ -278,31 +242,13 @@ button:active {
   font-weight: 500;
 }
 
-.fund-table .col-description {
-  max-width: 300px;
-  word-wrap: break-word;
-  white-space: pre-wrap;
-}
-
 .fund-table tr:hover {
   background: rgba(255, 255, 255, 0.4);
-}
-
-.fund-table .total-row {
-  font-weight: 700;
-  background: rgba(37, 99, 235, 0.1);
-}
-
-.fund-table .total-row td {
-  border-top: 2px solid var(--accent);
 }
 
 @media (max-width: 768px) {
   .grid-2 {
     grid-template-columns: 1fr;
-  }
-  .tabs {
-    flex-direction: column;
   }
 }
 

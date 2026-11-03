@@ -1,11 +1,7 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Wallet, RefreshCw, Building2, Lock } from 'lucide-react';
+import { useState } from 'react';
+import { Wallet, Lock } from 'lucide-react';
 import './index.css';
-import FundManager from './components/FundManager';
 import DebtManager from './components/DebtManager';
-
-const API_URL = '/api';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -14,10 +10,6 @@ function App() {
   const [passcode, setPasscode] = useState('');
   const [authError, setAuthError] = useState('');
   const validPasscodes = ['486508', '486496', '487754', '270989'];
-
-  const [activeTab, setActiveTab] = useState('debts'); // 'debts', 'general', 'private'
-
-
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -60,37 +52,11 @@ function App() {
   return (
     <div className="app-container">
       <header>
-        <h1><Wallet className="inline-block mr-2 mb-1" size={36} /> Debt & Fund Tracker</h1>
+        <h1><Wallet className="inline-block mr-2 mb-1" size={36} /> Debt Tracker</h1>
         <p className="subtitle">Hệ thống quản lý nợ thông minh & cấn trừ tự động</p>
       </header>
 
-      <div className="tabs">
-        <button
-          className={`tab-btn ${activeTab === 'debts' ? 'active' : ''}`}
-          onClick={() => setActiveTab('debts')}
-        >
-          <RefreshCw className="inline-block mr-2" size={18} style={{ verticalAlign: 'middle' }} />
-          Quản lý Nợ
-        </button>
-        <button
-          className={`tab-btn ${activeTab === 'general' ? 'active' : ''}`}
-          onClick={() => setActiveTab('general')}
-        >
-          <Building2 className="inline-block mr-2" size={18} style={{ verticalAlign: 'middle' }} />
-          Quỹ Chung Phòng
-        </button>
-        <button
-          className={`tab-btn ${activeTab === 'private' ? 'active' : ''}`}
-          onClick={() => setActiveTab('private')}
-        >
-          <Lock className="inline-block mr-2" size={18} style={{ verticalAlign: 'middle' }} />
-          Quỹ Riêng KHDN
-        </button>
-      </div>
-
-      {activeTab === 'debts' && <DebtManager />}
-      {activeTab === 'general' && <FundManager type="general" />}
-      {activeTab === 'private' && <FundManager type="private" />}
+      <DebtManager />
     </div>
   );
 }

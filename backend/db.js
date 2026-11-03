@@ -46,30 +46,13 @@ async function initDb() {
       )
     `;
 
-    const createFundTransactionsTable = `
-      CREATE TABLE IF NOT EXISTS fund_transactions (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        fund_type VARCHAR(20) NOT NULL,
-        transaction_date DATE NOT NULL,
-        description VARCHAR(255) NOT NULL,
-        income DECIMAL(12, 2) DEFAULT 0,
-        expense DECIMAL(12, 2) DEFAULT 0,
-        spender VARCHAR(255),
-        notes VARCHAR(255),
-        is_refunded BOOLEAN DEFAULT FALSE,
-        created_by_passcode VARCHAR(20),
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      )
-    `;
-
     await pool.query(createUsersTable);
     await pool.query(createTransactionsTable);
-    await pool.query(createFundTransactionsTable);
+    await pool.query('DROP TABLE IF EXISTS fund_transactions');
 
     // Add columns if tables already exist
     try { await pool.query("ALTER TABLE users ADD COLUMN created_by_passcode VARCHAR(20)"); } catch (e) {}
     try { await pool.query("ALTER TABLE transactions ADD COLUMN created_by_passcode VARCHAR(20)"); } catch (e) {}
-    try { await pool.query("ALTER TABLE fund_transactions ADD COLUMN created_by_passcode VARCHAR(20)"); } catch (e) {}
 
     console.log("Database and tables initialized successfully");
   } catch (error) {
