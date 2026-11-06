@@ -28,6 +28,7 @@ async function initDb() {
       CREATE TABLE IF NOT EXISTS users (
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(255) NOT NULL UNIQUE,
+        account_no VARCHAR(50),
         created_by_passcode VARCHAR(20)
       )
     `;
@@ -52,6 +53,7 @@ async function initDb() {
 
     // Add columns if tables already exist
     try { await pool.query("ALTER TABLE users ADD COLUMN created_by_passcode VARCHAR(20)"); } catch (e) {}
+    try { await pool.query("ALTER TABLE users ADD COLUMN account_no VARCHAR(50)"); } catch (e) {}
     try { await pool.query("ALTER TABLE transactions ADD COLUMN created_by_passcode VARCHAR(20)"); } catch (e) {}
 
     console.log("Database and tables initialized successfully");

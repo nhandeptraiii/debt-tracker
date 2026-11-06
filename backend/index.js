@@ -47,8 +47,8 @@ function minimizeTransactions(transactions, users) {
     const settleAmount = Math.min(debtor.amount, creditor.amount);
 
     simplifiedTransactions.push({
-      from: { id: debtor.id, name: debtor.name },
-      to: { id: creditor.id, name: creditor.name },
+      from: { id: debtor.id, name: debtor.name, account_no: debtor.account_no || '' },
+      to: { id: creditor.id, name: creditor.name, account_no: creditor.account_no || '' },
       amount: settleAmount
     });
 
@@ -77,9 +77,26 @@ app.get('/api/users', async (req, res) => {
 // 2. Thêm user mới
 app.post('/api/users', async (req, res) => {
   try {
-    const { name, created_by_passcode } = req.body;
-    const [result] = await pool.query('INSERT INTO users (name, created_by_passcode) VALUES (?, ?)', [name, created_by_passcode]);
-    res.status(201).json({ id: result.insertId, name });
+    const { name, account_no, created_by_passcode } = req.body;
+    const cleanAccountNo = account_no ? String(account_no).replace(/\s+/g, '') : null;
+    const [result] = await pool.query(
+      'INSERT INTO users (name, account_no, created_by_passcode) VALUES (?, ?, ?)',
+      [name, cleanAccountNo, created_by_passcode]
+    );
+    res.status(201).json({ id: result.insertId, name, account_no: cleanAccountNo });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// 2.5. Cập nhật số tài khoản ViettelPay (MB Bank) của user
+app.patch('/api/users/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { account_no } = req.body;
+    const cleanAccountNo = account_no ? String(account_no).replace(/\s+/g, '') : null;
+    await pool.query('UPDATE users SET account_no = ? WHERE id = ?', [cleanAccountNo, id]);
+    res.json({ success: true, account_no: cleanAccountNo });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
